@@ -56,7 +56,7 @@ public class BaseBSTST<Key extends Comparable<Key>, Value> implements OrderedSym
     }
     
     private Node put(Node x, Key key, Value val) {
-        // Change key’s value to val if key in subtree rooted at x.
+        // Change key's value to val if key in subtree rooted at x.
         // Otherwise, add new node to subtree associating key with val.
         if (x == null) return new Node(key, val, 1);
         int cmp = key.compareTo(x.key);
@@ -194,12 +194,28 @@ public class BaseBSTST<Key extends Comparable<Key>, Value> implements OrderedSym
     
     @Override
     public boolean contains(Key key) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        Node index = root;
+        while(true) {
+        	if(index == null) {
+        		break;
+        	}
+        	int cmp = key.compareTo(index.key);
+        	if(cmp==0) {
+        		return true;
+        	}
+        	if(cmp<0) {
+        		index = index.left;
+        	}else {
+        		index = index.right;
+        	}
+        }
+        return false;
     }
 
     @Override
     public boolean isEmpty() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        if (root == null) return true;
+        return false;
     }
 
     @Override
@@ -240,11 +256,14 @@ public class BaseBSTST<Key extends Comparable<Key>, Value> implements OrderedSym
         bst.put(2, "TWO");
         bst.put(7, "SEVEN");
         
+        System.out.println("Contains: " + bst.contains(1));
+        System.out.println("isEmpty: " + bst.isEmpty());
+        
         System.out.println("Before balance:");
-        bst.printLevel(10); //root
+        //bst.printLevel(10); //root
         
         System.out.println("After balance:");
-        bst.balance();
-        bst.printLevel(5); //root
+        //bst.balance();
+        //bst.printLevel(5); //root
     }
 }
